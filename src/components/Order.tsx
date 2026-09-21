@@ -65,7 +65,7 @@ export default function Order({ pieces, tiers }: { pieces: Piece[]; tiers: Tier[
       setPhase({ kind: "done", result });
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (e: any) {
-      setError(e?.message ?? "That didn't go through. Nothing was charged.");
+      setError(e?.message ?? "Sorry! Your order didn't go through. Nothing was charged!");
       setPhase({ kind: "form" });
     }
   }
@@ -79,7 +79,7 @@ export default function Order({ pieces, tiers }: { pieces: Piece[]; tiers: Tier[
       <div className="order-grid">
         <div>
           <h1 style={{ fontSize: "clamp(28px,3.6vw,42px)" }}>
-            {refPiece ? "This style, on your garment" : "Tell her what you want"}
+            {refPiece ? "This style, on your garment" : "Describe your Custom"}
           </h1>
 
           {refPiece && (

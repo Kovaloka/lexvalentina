@@ -61,6 +61,12 @@ export function email(value) {
 
 export class BadInput extends Error {}
 
+/** The server is missing a setting. Distinct from a crash, because the fix is
+ *  completely different and the person hitting it can do nothing about either.
+ *  Naming the variable is safe — a variable NAME is not a secret, and without
+ *  it the operator is reduced to guessing which of ten is missing. */
+export class NotConfigured extends Error {}
+
 /** Distinguishes "you sent me something wrong" from "we broke". Only the first
  *  is safe to echo back verbatim. */
 export function guarded(method, fn) {
@@ -69,6 +75,10 @@ export function guarded(method, fn) {
       return await fn(req, ctx);
     } catch (e) {
       if (e instanceof BadInput) return fail(e.message, 422);
+      if (e instanceof NotConfigured) {
+        console.error("[lexvalentina] not configured:", e.message);
+        return fail(`This part of the site isn't finished being set up: ${e.message}`, 503);
+      }
       throw e;
     }
   });

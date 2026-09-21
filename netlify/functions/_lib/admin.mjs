@@ -7,6 +7,8 @@
    that prefix is what would bake a value into the bundle, and none of these
    have it. */
 
+import { NotConfigured } from "./respond.mjs";
+
 const VERSION = process.env.SHOPIFY_API_VERSION || "2026-07";
 
 const STORE = () =>
@@ -24,7 +26,7 @@ async function accessToken() {
 
   const id = process.env.SHOPIFY_CLIENT_ID?.trim();
   const secret = process.env.SHOPIFY_CLIENT_SECRET?.trim();
-  if (!id || !secret) throw new Error("Shopify credentials are not configured on the server.");
+  if (!id || !secret) throw new NotConfigured("SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET are not set on the server.");
 
   const res = await fetch(`https://${STORE()}/admin/oauth/access_token`, {
     method: "POST",

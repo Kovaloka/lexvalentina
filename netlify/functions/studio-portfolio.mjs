@@ -4,12 +4,12 @@
    only the published ones. This sees drafts too, which is the point: she needs
    to build a piece up — photo, description, tier — before anyone sees it. */
 import { admin } from "./_lib/admin.mjs";
-import { BadInput, guarded, json, oneOf, text } from "./_lib/respond.mjs";
+import { BadInput, NotConfigured, guarded, json, oneOf, text } from "./_lib/respond.mjs";
 import { requireStudio } from "./_lib/session.mjs";
 
 const TYPE = () => {
   const t = process.env.PORTFOLIO_TYPE;
-  if (!t) throw new Error("PORTFOLIO_TYPE is not configured on the server.");
+  if (!t) throw new NotConfigured("PORTFOLIO_TYPE is not set on the server.");
   return t;
 };
 

@@ -48,8 +48,8 @@ export default function Status() {
       <Divider>Check an order</Divider>
       <h1 style={{ fontSize: "clamp(28px,3.6vw,42px)" }}>Where your piece is up to</h1>
       <p style={{ fontSize: 16, color: "var(--ink-soft)", marginTop: 12 }}>
-        Your reference is on the confirmation and on the invoice. Both it and the email it was
-        placed with are needed.
+        Your reference is on the confirmation and on the invoice! Both it and the email it was
+        placed with are needed!
       </p>
 
       <form
@@ -102,7 +102,7 @@ export default function Status() {
 
       {remembered && (
         <p style={{ fontSize: 12.5, color: "var(--ink-faint)", marginTop: 26 }}>
-          This browser remembers your order so you can come straight back.{" "}
+          The browser will remember your order so you can come back whenever you like.{" "}
           <button
             className="link"
             onClick={() => { forgetOrder(); setRemembered(false); setEmail(""); setResult(null); go("/status"); }}

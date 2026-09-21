@@ -17,18 +17,18 @@ export default function Home({ pieces, tiers }: { pieces: Piece[]; tiers: Tier[]
 
       <section className="shell lv-hero" style={{ padding: "52px 30px 64px" }}>
         <div>
-          <span className="lbl">Customs, on your own clothes</span>
+          <span className="lbl">Customs on your own clothes</span>
           <h1 style={{ fontSize: "clamp(36px,5.6vw,68px)", marginTop: 16 }}>
-            Send her something you already own
+            Your Clothes, Our Customs
           </h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 18, maxWidth: "42ch" }}>
-            Lex doesn't sell clothing. You send the jacket, the hoodie, the jeans you've had for
-            years — she stitches, paints, prints or rebuilds it into something only you have.
+            Lex doesn't sell the clothes. You send the jacket, the hoodie, the jeans you've had for
+            years — Lex will stitch, paint, print or customize it into something only you can own.
           </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 28 }}>
             <button className="btn" onClick={() => go("/order")}>Start an order</button>
-            <button className="btn btn-ghost" onClick={() => go("/work")}>See her work</button>
+            <button className="btn btn-ghost" onClick={() => go("/work")}>See previous customs</button>
           </div>
 
           <div style={{ display: "flex", gap: 26, marginTop: 34, flexWrap: "wrap" }}>
@@ -49,9 +49,9 @@ export default function Home({ pieces, tiers }: { pieces: Piece[]; tiers: Tier[]
         <Divider>How it goes</Divider>
         <div className="grid-steps">
           {([
-            ["You pick the work", "Point at a piece she's already done, or describe your own idea. The tier tells you the price before anything is charged."],
-            ["You send the garment", "By post or dropped off. The deposit books the slot; the rest is due when it's finished."],
-            ["She does it, you see it", "Photographs before it ships back. You pay the balance once you've seen it."],
+            ["You choose the design", "Either take some inspiration from a piece Lex has already done, or describe your own idea. The tier tells you the price before anything is charged."],
+            ["You send the garment", "By post or dropped off. The deposit secures your position; the rest is due when it's finished."],
+            ["Lex does it, you pay after you see it", "Photos of your clothes are taken before it ships back. You pay the balance once you've seen it and are satisfied."],
           ] as [string, string][]).map(([title, blurb], i) => (
             <div key={title} className="step">
               <span className="step-n">{String(i + 1).padStart(2, "0")}</span>

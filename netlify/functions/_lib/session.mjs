@@ -11,6 +11,8 @@
    The password itself never leaves the environment variable. It is never sent
    back to the browser, never written into a cookie, and never logged. */
 
+import { NotConfigured } from "./respond.mjs";
+
 const COOKIE = "lv_studio";
 const WEEK = 7 * 24 * 60 * 60;
 
@@ -22,7 +24,7 @@ function secret() {
   const s = process.env.STUDIO_SECRET;
   /* A default would be worse than a crash: every deploy would share it, and
      anyone who read this file could mint a session for any site running it. */
-  if (!s || s.length < 24) throw new Error("STUDIO_SECRET is missing or too short (needs 24+ characters).");
+  if (!s || s.length < 24) throw new NotConfigured("STUDIO_SECRET is missing, or shorter than 24 characters.");
   return s;
 }
 
@@ -43,7 +45,7 @@ function sameString(a, b) {
 
 export async function checkPassword(given) {
   const real = process.env.STUDIO_PASSWORD;
-  if (!real || real.length < 8) throw new Error("STUDIO_PASSWORD is missing or too short.");
+  if (!real || real.length < 8) throw new NotConfigured("STUDIO_PASSWORD is missing, or shorter than 8 characters.");
   return typeof given === "string" && sameString(given, real);
 }
 
