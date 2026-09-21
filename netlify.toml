@@ -1,0 +1,49 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# `netlify dev` starts Vite, waits for it, and proxies to it. Both halves of
+# that handshake are spelled out here rather than guessed: targetPort must
+# match vite.config.ts, and 8888 is the URL to actually open — it is the one
+# that serves /api/*, which the Vite port alone does not.
+[dev]
+  command = "npm run dev"
+  targetPort = 5173
+  port = 8888
+  publish = "dist"
+  framework = "#custom"
+  autoLaunch = false
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# /api/* is the public name; /.netlify/functions/* is the implementation. The
+# redirect keeps the URL stable if the runtime ever moves, and it must come
+# BEFORE the SPA catch-all below — Netlify takes the first rule that matches,
+# so a catch-all placed first would swallow every API call and answer it with
+# index.html, which arrives as a JSON parse error rather than a 404.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# A single-page app: every other route must serve index.html so /work/amor-detroit-jacket
+# works on a hard refresh, not just on client-side navigation.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Only VITE_-prefixed variables reach the browser bundle. That prefix is the
+# tell: anything with it is public by construction. The Shopify Admin
+# credential never gets one — it belongs to Functions, in Phase 3.
+#
+# Functions read these (NO VITE_ prefix — they never reach the browser):
+#   SHOPIFY_STORE, SHOPIFY_CLIENT_ID, SHOPIFY_CLIENT_SECRET, SHOPIFY_API_VERSION
+#
+# The app also needs write_draft_orders and write_files on top of the Phase 1
+# scopes, set on the app version in the Dev Dashboard, then REINSTALL.
